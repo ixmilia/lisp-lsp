@@ -18,7 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc -watch -p ./",
     "clean-server": "npx rimraf ./server",
-    "publish-server": "pwsh ./publish-server.ps1",
+    "publish-server": "dotnet publish ../IxMilia.Lisp.LanguageServer.App/IxMilia.Lisp.LanguageServer.App.csproj --configuration Release",
     "copy-server": "npx copyfiles --up 8 --error --verbose \"../../artifacts/bin/IxMilia.Lisp.LanguageServer.App/Release/net6.0/publish/*\" ./server/",
     "package": "npm run compile && npm run clean-server && npm run publish-server && npm run copy-server && npx vsce package"
   },

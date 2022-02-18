@@ -4,13 +4,19 @@ import * as languageclient from 'vscode-languageclient/node';
 
 let client: languageclient.LanguageClient;
 
+const languageName = 'lisp';
+const filePattern = '*.{lisp,lsp}';
+
 export async function activate(context: vscode.ExtensionContext) {
-    const acquireContext = {
-        version: '6.0',
-        requestingExtensionId: context.extension.id,
-    };
-    const dotnetResult = <any>await vscode.commands.executeCommand('dotnet.acquire', acquireContext);
-    const dotnetPath = dotnetResult?.dotnetPath || 'dotnet';
+    let dotnetPath = 'dotnet';
+    if (context.extensionMode === vscode.ExtensionMode.Production) {
+        const acquireContext = {
+            version: '6.0',
+            requestingExtensionId: context.extension.id,
+        };
+        const dotnetResult = <any>await vscode.commands.executeCommand('dotnet.acquire', acquireContext);
+        dotnetPath = dotnetResult?.dotnetPath || dotnetPath;
+    }
 
     const serverOptions: languageclient.ServerOptions = {
         run: {
@@ -19,18 +25,18 @@ export async function activate(context: vscode.ExtensionContext) {
             transport: languageclient.TransportKind.stdio,
         },
         debug: {
-            command: 'dotnet',
+            command: dotnetPath,
             args: ['run', '--project', path.join(__dirname, '..', '..', 'IxMilia.Lisp.LanguageServer.App', 'IxMilia.Lisp.LanguageServer.App.csproj')],
             transport: languageclient.TransportKind.stdio,
         }
     };
     const clientOptions: languageclient.LanguageClientOptions = {
         documentSelector: [
-            { scheme: 'file', language: 'lisp', },
-            { scheme: 'untitled', language: 'lisp' }
+            { scheme: 'file', language: languageName, pattern: filePattern },
+            { scheme: 'untitled', language: languageName }
         ],
     };
-    client = new languageclient.LanguageClient('lisp', 'IxMilia.Lisp Language Server', serverOptions, clientOptions);
+    client = new languageclient.LanguageClient(languageName, 'IxMilia.Lisp Language Server', serverOptions, clientOptions);
     client.start();
 }
 
