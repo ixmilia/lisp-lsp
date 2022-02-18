@@ -8,7 +8,18 @@ namespace IxMilia.Lisp.LanguageServer
         public static string PathFromUri(string uriString)
         {
             var uri = new Uri(uriString);
-            return uri.LocalPath.Substring(1);
+            var localPath = uri.LocalPath;
+            if (localPath.Length >= 3 &&
+                localPath[0] == '/' &&
+                char.IsLetter(localPath[1]) &&
+                localPath[2] == ':')
+            {
+                // starts with something like:
+                //   /c:/Users...
+                localPath = localPath.Substring(1);
+            }
+
+            return localPath;
         }
 
         public static LispSourcePosition SourcePositionFromPosition(Position position)
