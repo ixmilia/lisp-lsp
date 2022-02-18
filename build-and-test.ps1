@@ -35,7 +35,7 @@ try {
     }
 
     # create package
-    Push-Location "$PSScriptRoot\src\lisp-lsp"
+    Push-Location "$PSScriptRoot\src\lisp"
     npm i
     npm run package
     Pop-Location
