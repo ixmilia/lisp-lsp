@@ -18,6 +18,27 @@ namespace IxMilia.Lisp.LanguageServer.Test
         }
 
         [Fact]
+        public void ParseDidChangeTextDocumentParams()
+        {
+            var result = DeserializeObject<DidChangeTextDocumentParams>(@"{""textDocument"":{""uri"":""some-uri"",""version"":123},""contentChanges"":[{""text"":""some-text"",""range"":{""start"":{""line"":1,""character"":2},""end"":{""line"":3,""character"":4}}}]}");
+            Assert.Equal("some-uri", result.TextDocument.Uri);
+            Assert.Equal(123, result.TextDocument.Version);
+            Assert.Equal("some-text", result.ContentChanges.Single().Text);
+            Assert.Equal(1u, result.ContentChanges.Single().Range.Start.Line);
+            Assert.Equal(2u, result.ContentChanges.Single().Range.Start.Character);
+            Assert.Equal(3u, result.ContentChanges.Single().Range.End.Line);
+            Assert.Equal(4u, result.ContentChanges.Single().Range.End.Character);
+            Assert.Null(result.ContentChanges.Single().RangeLength);
+        }
+
+        [Fact]
+        public void ParseDidCloseTextDocumentParams()
+        {
+            var result = DeserializeObject<DidCloseTextDocumentParams>(@"{""textDocument"":{""uri"":""some-uri""}}");
+            Assert.Equal("some-uri", result.TextDocument.Uri);
+        }
+
+        [Fact]
         public void ParseDidOpenTextDocumentParams()
         {
             var result = DeserializeObject<DidOpenTextDocumentParams>(@"{""textDocument"":{""uri"":""some-uri"",""languageId"":""some-language-id"",""version"":123,""text"":""some-text""}}");

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using IxMilia.Lisp.LanguageServer.Protocol;
@@ -20,6 +21,19 @@ namespace IxMilia.Lisp.LanguageServer
             var messageHandler = new HeaderDelimitedMessageHandler(sendingStream, receivingStream, formatter);
             _rpc = new JsonRpc(messageHandler, this);
             _repl = new LispRepl();
+            _rpc.TraceSource = new TraceSource("debugging-trace-listener", SourceLevels.All);
+            _rpc.TraceSource.Listeners.Add(new DebuggingTraceListener());
+        }
+
+        private class DebuggingTraceListener : TraceListener
+        {
+            public override void Write(string message)
+            {
+            }
+
+            public override void WriteLine(string message)
+            {
+            }
         }
 
         public void Start()
@@ -31,6 +45,23 @@ namespace IxMilia.Lisp.LanguageServer
         public InitializeResult Initialize(InitializeParams param)
         {
             return new InitializeResult();
+        }
+
+        [JsonRpcMethod("textDocument/didChange", UseSingleObjectParameterDeserialization = true)]
+        public void TextDocumentDidChange(DidChangeTextDocumentParams param)
+        {
+            var path = Converters.PathFromUri(param.TextDocument.Uri);
+            foreach (var contentChanges in param.ContentChanges)
+            {
+                _documentContents[path] = contentChanges.Text;
+            }
+        }
+
+        [JsonRpcMethod("textDocument/didClose", UseSingleObjectParameterDeserialization = true)]
+        public void TextDocumentDidClose(DidCloseTextDocumentParams param)
+        {
+            var path = Converters.PathFromUri(param.TextDocument.Uri);
+            _documentContents.Remove(path);
         }
 
         [JsonRpcMethod("textDocument/didOpen", UseSingleObjectParameterDeserialization = true)]

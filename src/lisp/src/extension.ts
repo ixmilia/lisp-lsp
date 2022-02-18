@@ -5,7 +5,6 @@ import * as languageclient from 'vscode-languageclient/node';
 let client: languageclient.LanguageClient;
 
 const languageName = 'lisp';
-const filePattern = '*.{lisp,lsp}';
 
 export async function activate(context: vscode.ExtensionContext) {
     let dotnetPath = 'dotnet';
@@ -32,8 +31,7 @@ export async function activate(context: vscode.ExtensionContext) {
     };
     const clientOptions: languageclient.LanguageClientOptions = {
         documentSelector: [
-            { scheme: 'file', language: languageName, pattern: filePattern },
-            { scheme: 'untitled', language: languageName }
+            { language: languageName }
         ],
     };
     client = new languageclient.LanguageClient(languageName, 'IxMilia.Lisp Language Server', serverOptions, clientOptions);

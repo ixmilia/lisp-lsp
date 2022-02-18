@@ -30,7 +30,7 @@ namespace IxMilia.Lisp.LanguageServer.Test
         {
             var obj = new InitializeResult();
             var json = SerializeObject(obj);
-            Assert.Equal(@"{""capabilities"":{""textDocumentSync"":{""openClose"":true,""change"":""full""},""hoverProvider"":true}}", json);
+            Assert.Equal(@"{""capabilities"":{""textDocumentSync"":{""openClose"":true,""change"":1},""hoverProvider"":true}}", json);
         }
     }
 }
