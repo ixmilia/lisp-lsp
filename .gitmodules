@@ -1,0 +1,3 @@
+[submodule "src/IxMilia.Lisp"]
+	path = src/IxMilia.Lisp
+	url = https://github.com/ixmilia/lisp

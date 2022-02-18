@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32216.311
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IxMilia.Lisp.LanguageServer.App", "src\IxMilia.Lisp.LanguageServer.App\IxMilia.Lisp.LanguageServer.App.csproj", "{72181807-2052-454B-A2B5-F5133053CDCE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IxMilia.Lisp.LanguageServer", "src\IxMilia.Lisp.LanguageServer\IxMilia.Lisp.LanguageServer.csproj", "{8D42487E-4CBD-45CA-84B7-2C73C04DC0E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IxMilia.Lisp.LanguageServer.Test", "src\IxMilia.Lisp.LanguageServer.Test\IxMilia.Lisp.LanguageServer.Test.csproj", "{18136CAC-AF26-49FA-9295-3675167D6135}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IxMilia.Lisp", "src\IxMilia.Lisp\src\IxMilia.Lisp\IxMilia.Lisp.csproj", "{93C70C6D-9433-4EE0-8E1E-8B8AC13B1FE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72181807-2052-454B-A2B5-F5133053CDCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72181807-2052-454B-A2B5-F5133053CDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72181807-2052-454B-A2B5-F5133053CDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72181807-2052-454B-A2B5-F5133053CDCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D42487E-4CBD-45CA-84B7-2C73C04DC0E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D42487E-4CBD-45CA-84B7-2C73C04DC0E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D42487E-4CBD-45CA-84B7-2C73C04DC0E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D42487E-4CBD-45CA-84B7-2C73C04DC0E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18136CAC-AF26-49FA-9295-3675167D6135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18136CAC-AF26-49FA-9295-3675167D6135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18136CAC-AF26-49FA-9295-3675167D6135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18136CAC-AF26-49FA-9295-3675167D6135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93C70C6D-9433-4EE0-8E1E-8B8AC13B1FE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93C70C6D-9433-4EE0-8E1E-8B8AC13B1FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93C70C6D-9433-4EE0-8E1E-8B8AC13B1FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93C70C6D-9433-4EE0-8E1E-8B8AC13B1FE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB1F382E-D539-4BD1-9A76-076B126554CD}
+	EndGlobalSection
+EndGlobal
