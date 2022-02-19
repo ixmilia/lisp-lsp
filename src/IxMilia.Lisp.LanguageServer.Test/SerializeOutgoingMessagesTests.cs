@@ -26,11 +26,19 @@ namespace IxMilia.Lisp.LanguageServer.Test
         }
 
         [Fact]
-        public void SerializeInitializeResult()
+        public void SerializeInitializeResultWithSyncKindFull()
         {
-            var obj = new InitializeResult();
+            var obj = new InitializeResult(TextDocumentSyncKind.Full);
             var json = SerializeObject(obj);
             Assert.Equal(@"{""capabilities"":{""textDocumentSync"":{""openClose"":true,""change"":1},""hoverProvider"":true}}", json);
+        }
+
+        [Fact]
+        public void SerializeInitializeResultWithSyncKindIncremental()
+        {
+            var obj = new InitializeResult(TextDocumentSyncKind.Incremental);
+            var json = SerializeObject(obj);
+            Assert.Equal(@"{""capabilities"":{""textDocumentSync"":{""openClose"":true,""change"":2},""hoverProvider"":true}}", json);
         }
     }
 }

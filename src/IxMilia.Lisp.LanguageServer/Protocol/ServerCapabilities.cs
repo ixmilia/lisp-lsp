@@ -5,9 +5,9 @@ namespace IxMilia.Lisp.LanguageServer.Protocol
         public TextDocumentSyncOptions TextDocumentSync { get; set; }
         public bool HoverProvider { get; set; }
 
-        public ServerCapabilities()
+        public ServerCapabilities(TextDocumentSyncKind syncKind)
         {
-            TextDocumentSync = new TextDocumentSyncOptions();
+            TextDocumentSync = new TextDocumentSyncOptions(syncKind);
             HoverProvider = true;
         }
     }

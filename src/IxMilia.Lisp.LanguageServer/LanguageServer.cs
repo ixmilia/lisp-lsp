@@ -13,14 +13,19 @@ namespace IxMilia.Lisp.LanguageServer
         private LispRepl _repl;
         private Dictionary<string, string> _documentContents = new Dictionary<string, string>();
 
+        internal LanguageServer()
+        {
+            _repl = new LispRepl();
+        }
+
         public LanguageServer(Stream sendingStream, Stream receivingStream)
+            : this()
         {
             var encoding = new UTF8Encoding(false);
             var formatter = new JsonMessageFormatter(encoding);
             Serializer.ConfigureSerializer(formatter.JsonSerializer);
             var messageHandler = new HeaderDelimitedMessageHandler(sendingStream, receivingStream, formatter);
             _rpc = new JsonRpc(messageHandler, this);
-            _repl = new LispRepl();
             _rpc.TraceSource = new TraceSource("debugging-trace-listener", SourceLevels.All);
             _rpc.TraceSource.Listeners.Add(new DebuggingTraceListener());
         }
@@ -41,10 +46,16 @@ namespace IxMilia.Lisp.LanguageServer
             _rpc.StartListening();
         }
 
+        internal string GetDocumentContents(string uri)
+        {
+            var path = Converters.PathFromUri(uri);
+            return _documentContents[path];
+        }
+
         [JsonRpcMethod("initialize", UseSingleObjectParameterDeserialization = true)]
         public InitializeResult Initialize(InitializeParams param)
         {
-            return new InitializeResult();
+            return new InitializeResult(TextDocumentSyncKind.Incremental);
         }
 
         [JsonRpcMethod("textDocument/didChange", UseSingleObjectParameterDeserialization = true)]
@@ -53,7 +64,24 @@ namespace IxMilia.Lisp.LanguageServer
             var path = Converters.PathFromUri(param.TextDocument.Uri);
             foreach (var contentChanges in param.ContentChanges)
             {
-                _documentContents[path] = contentChanges.Text;
+                if (_documentContents.TryGetValue(path, out var contents))
+                {
+                    if (contentChanges.Range is object)
+                    {
+                        // incremental update
+                        var startIndex = contentChanges.Range.Start.GetIndex(contents);
+                        var endIndex = contentChanges.Range.End.GetIndex(contents);
+                        var preText = contents.Substring(0, startIndex);
+                        var postText = contents.Substring(endIndex);
+                        var updatedContent = string.Concat(preText, contentChanges.Text, postText);
+                        _documentContents[path] = updatedContent;
+                    }
+                    else
+                    {
+                        // full update
+                        _documentContents[path] = contentChanges.Text;
+                    }
+                }
             }
         }
 

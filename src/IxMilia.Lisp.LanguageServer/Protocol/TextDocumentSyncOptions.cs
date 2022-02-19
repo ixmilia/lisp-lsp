@@ -9,10 +9,10 @@ namespace IxMilia.Lisp.LanguageServer.Protocol
         [JsonConverter(typeof(ForceDefaultConverter))]
         public TextDocumentSyncKind Change { get; }
 
-        public TextDocumentSyncOptions()
+        public TextDocumentSyncOptions(TextDocumentSyncKind syncKind)
         {
             OpenClose = true;
-            Change = TextDocumentSyncKind.Full;
+            Change = syncKind;
         }
     }
 }

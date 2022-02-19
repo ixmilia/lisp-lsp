@@ -4,9 +4,9 @@ namespace IxMilia.Lisp.LanguageServer.Protocol
     {
         public ServerCapabilities Capabilities { get; set; }
 
-        public InitializeResult()
+        public InitializeResult(TextDocumentSyncKind syncKind)
         {
-            Capabilities = new ServerCapabilities();
+            Capabilities = new ServerCapabilities(syncKind);
         }
     }
 }
